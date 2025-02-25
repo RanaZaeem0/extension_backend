@@ -1,41 +1,74 @@
 import { Request, Response } from "express";
 import { asyncHandler } from "../utils/asyncHandler";
 import zod from "zod"
+import User from "../models/user.model";
+import { ApiError } from "../utils/apiError";
+import { ApiResponse } from "../utils/apiResponse";
+import mongoose from "mongoose";
 
 
-const registerUser  = asyncHandler(async(req:Request,res:Response)=>{
+const registerUser = asyncHandler(async (req: Request, res: Response) => {
 
-    const UserDataCheck = zod.object({
-        username: zod.string().min(2),
-        name: zod.string(),
-        password: zod.string().min(2),
-      });
-  
-      //   take data from frontend
-      const { username, password, name } = req.body;
-    
-      const validate = UserDataCheck.safeParse({
-        username: username,
-        password: password,
-        name: name,
-      });
+  const UserDataCheck = zod.object({
+    email: zod.string().min(2),
+    name: zod.string(),
+    password: zod.string().optional(),
+  });
+
+  //   take data from frontend
+  const { email, password, name } = req.body;
+
+  const validate = UserDataCheck.safeParse({
+    email: email,
+    password: password,
+    name: name,
+  });
 
 
+
+  if (!validate.success) {
+    throw new ApiError(400, validate.error.message);
+  }
+
+  const findUser = await User.findOne({ email })
+  if (findUser) {
+    throw new ApiError(402, "User already exist")
+  }
+
+
+  const createUser = await User.create({ email, password , name })
+
+  if (!createUser) {
+    throw new ApiError(403, "User not created")
+  }
+  res.status(201).json(
+    new ApiResponse(201, createUser, "User created successfully")
+  )
 
 
 })
 
-const getUserDetails = asyncHandler(async()=>{
+const loginUser = asyncHandler(async (req: Request, res: Response) => {
+
+  const user  = req.user
+
+  if(!user ){
+    throw new ApiError(400, "User not found")
+  }
+
+  res.status(201).json(
+    new ApiResponse(201,user, "User login successfully")
+  )
+})
+
+const getUserDetails = asyncHandler(async () => {
 
 })
 
-const loginUser  = asyncHandler(async()=>{
+
+const logOut = asyncHandler(async () => {
 
 
 })
-const logOut  = asyncHandler(async()=>{
 
-
-})
-
-export {registerUser,getUserDetails,loginUser,logOut}
+export { registerUser, getUserDetails, loginUser, logOut }
