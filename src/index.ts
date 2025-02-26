@@ -10,6 +10,10 @@ import passport from "./middleware/passport"
 import session from "express-session"
 import User from "./models/user.model"
 import connectDB from "./db";
+dotenv.config({
+  path:'./.env'
+})
+
 const app  = express()
 
 connectDB()
@@ -55,6 +59,8 @@ app.use('/api/v1/tset',(req:Request,res:Response)=>{
     })
 })
 
-app.listen(8000,()=>{
-    console.log('server is running on port 8000')
+const PORT = process.env.PORT || 8000
+
+app.listen(PORT,()=>{
+    console.log(`server is running on port ${PORT}`)
   })
