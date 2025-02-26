@@ -87,7 +87,7 @@ const refreshAccessToken = async (req: Request, res: Response) => {
             // Set New Access Token in Cookie
             res.cookie("accessToken", newAccessToken, {
                 httpOnly: true,
-                secure: process.env.NODE_ENV === "production",
+                secure: process.env.NODE_ENV === "PRODUCTION",
                 sameSite: "none",
                 path: "/",
                 maxAge: 6 * 60 * 60 * 1000, // 6 hours
@@ -118,7 +118,7 @@ const logoutUser = (req: Request, res: Response) => {
         // Clear cookies
         res.clearCookie("connect.sid", {
             httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
+            secure: process.env.NODE_ENV === "PRODUCTION",
             sameSite: "none",
             path: "/"
         });
@@ -151,7 +151,7 @@ const logoutGoogleUser = (req: Request, res: Response, next: NextFunction) => {
             // Clear session cookie
             res.clearCookie("connect.sid", {
                 httpOnly: true,
-                secure: process.env.NODE_ENV === "production" ? true : false,
+                secure: process.env.NODE_ENV === "PRODUCTION" ? true : false,
                 sameSite: "none",
                 path: "/",
             });

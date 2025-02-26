@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express"
 import { verifyJwt } from "../middleware/auth.middleware"
-import { loginUser } from "../controllers/user.controller"
+import { loginUser, logOut } from "../controllers/user.controller"
 import { googleAuthCallback, loginSuccess } from "../auth/user.auth"
 import passport from "passport"
 
@@ -15,6 +15,8 @@ res.json({
     msg:"hello"
 })
 })
+
+userRoute.post('/logout',verifyJwt,logOut)
 
 
 

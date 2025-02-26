@@ -28,8 +28,8 @@ app.use(session({
   saveUninitialized: false, // Change to false
   cookie: {
     httpOnly: true,
-    secure: true, 
-    sameSite: "none"
+    secure: process.env.NODE_ENV === "PRODUCTION" , // Only secure in production
+    sameSite: process.env.NODE_ENV === "PRODUCTION" ? "none" : "none",
   }
 }));
 
@@ -54,7 +54,7 @@ app.use(cors({
 
 app.use('/auth',userRoute)
 
-app.use('/api/v1/tset',(req:Request,res:Response)=>{
+app.use('/api/v1/test',(req:Request,res:Response)=>{
     res.status(200).json({
         message:'hello'
     })
@@ -62,6 +62,6 @@ app.use('/api/v1/tset',(req:Request,res:Response)=>{
 
 const PORT = process.env.PORT || 8000
 
-app.listen(PORT,()=>{
+app.listen(8000,()=>{
     console.log(`server is running on port ${PORT}`)
   })

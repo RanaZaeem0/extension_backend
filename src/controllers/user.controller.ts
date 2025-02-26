@@ -5,6 +5,7 @@ import User from "../models/user.model";
 import { ApiError } from "../utils/apiError";
 import { ApiResponse } from "../utils/apiResponse";
 import mongoose from "mongoose";
+import { cookieOptions } from "../lib/constant";
 
 
 const registerUser = asyncHandler(async (req: Request, res: Response) => {
@@ -66,9 +67,20 @@ const getUserDetails = asyncHandler(async () => {
 })
 
 
-const logOut = asyncHandler(async () => {
+const logOut = asyncHandler(async (req: Request, res: Response) => {
+  const user = req.user;
 
+  if (!user) {
+    throw new ApiError(400, "User not found");
+  }
 
-})
+  // Clear cookies by setting them to an empty value and expiring them immediately
+  res.clearCookie("accessToken", cookieOptions);
+
+  res.clearCookie("refreshToken", cookieOptions);
+
+  return res.status(200).json(new ApiResponse(200, null, "User logged out successfully"));
+});
+
 
 export { registerUser, getUserDetails, loginUser, logOut }
