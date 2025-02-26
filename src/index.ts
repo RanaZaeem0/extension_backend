@@ -62,6 +62,6 @@ app.use('/api/v1/test',(req:Request,res:Response)=>{
 
 const PORT = process.env.PORT || 8000
 
-app.listen(8000,()=>{
+app.listen(PORT,()=>{
     console.log(`server is running on port ${PORT}`)
   })
