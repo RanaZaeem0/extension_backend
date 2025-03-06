@@ -59,6 +59,11 @@ app.use('/api/v1/test',(req:Request,res:Response)=>{
         message:'hello'
     })
 })
+app.use('/testing',(req:Request,res:Response)=>{
+    res.status(200).json({
+        message:'hello2'
+      })
+})
 
 const PORT = process.env.PORT || 8000
 
