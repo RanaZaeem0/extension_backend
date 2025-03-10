@@ -10,6 +10,7 @@ import passport from "./middleware/passport"
 import session from "express-session"
 import User from "./models/user.model"
 import connectDB from "./db";
+import { subscriptionRoute } from "./routes/subscription.route";
 dotenv.config({
   path:'./.env'
 })
@@ -53,6 +54,7 @@ app.use(cors({
 
 
 app.use('/auth',userRoute)
+app.use('/api/webhook',subscriptionRoute)
 
 app.use('/api/v1/test',(req:Request,res:Response)=>{
     res.status(200).json({

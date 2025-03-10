@@ -1,6 +1,8 @@
 
 
 export const GET_SUCCESS_MESSAGES = 'Got resource successfully';
+export const CREATED_SUBSCRIPTION = 'Subscription created successfully';
+
 export const GET_UNSUCCESS_MESSAGES = 'No resource found';
 export const ADD_SUCCESS_MESSAGES = 'resource added successfully';
 export const UPDATE_SUCCESS_MESSAGES = 'resource updated successfully';

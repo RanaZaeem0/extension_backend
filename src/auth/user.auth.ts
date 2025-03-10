@@ -4,7 +4,7 @@ import { NextFunction, Request, Response } from "express";
 import { ApiError } from "../utils/apiError";
 import { asyncHandler } from "../utils/asyncHandler";
 import { ApiResponse } from "../utils/apiResponse";
-import { cookieOptions } from "../lib/constant";
+import { cookieOptions } from "../constants/constant";
 dotenv.config()
 
 const generateAccessToken = (user: any) => {
