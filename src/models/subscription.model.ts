@@ -17,7 +17,7 @@ export interface ISubscription extends Document {
 const subscriptionSchema: Schema<ISubscription> = new Schema(
   {
     type: { type: String, enum: ['free', 'basic', 'premium'], required: true },
-    maxMessages: { type: Number, required: true },
+    maxMessages: { type: Number },
     stripeSubscriptionId: { type: String, required: true },
     priceId: { type: String, required: true },
     licenseKey:{type:String,required:true,default:generateLicenseKey()},
