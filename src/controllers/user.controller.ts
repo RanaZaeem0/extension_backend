@@ -5,7 +5,7 @@ import User from "../models/user.model";
 import { ApiError } from "../utils/apiError";
 import { ApiResponse } from "../utils/apiResponse";
 import mongoose from "mongoose";
-import { cookieOptions } from "../lib/constant";
+import { cookieOptions } from "../constants/constant";
 
 
 const registerUser = asyncHandler(async (req: Request, res: Response) => {

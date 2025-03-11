@@ -1,4 +1,5 @@
 import mongoose, { Document, Schema } from 'mongoose';
+import { generateLicenseKey } from '../lib/linensekey';
 
 export interface ISubscription extends Document {
   type: 'free' | 'basic' | 'premium';
@@ -7,26 +8,22 @@ export interface ISubscription extends Document {
   priceId: string; // The price ID from Stripe
   isActive: boolean; // Track if the subscription is active
   nextBillingDate: Date; // Track the next billing date
-  licenseKey:string
+  licenseKey:string;
+  startDate: Date;
+  endDate:Date;
 }
-// Function to generate a random license key
-const generateLicenseKey = (): string => {
-  return (
-    Math.random().toString(36).substring(2, 8).toUpperCase() + // First part
-    '-' +
-    Math.random().toString(36).substring(2, 8).toUpperCase() + // Second part
-    '-' +
-    Math.random().toString(36).substring(2, 8).toUpperCase()   // Third part
-  );
-};
+
+
 const subscriptionSchema: Schema<ISubscription> = new Schema(
   {
     type: { type: String, enum: ['free', 'basic', 'premium'], required: true },
-    maxMessages: { type: Number, required: true },
+    maxMessages: { type: Number },
     stripeSubscriptionId: { type: String, required: true },
     priceId: { type: String, required: true },
     licenseKey:{type:String,required:true,default:generateLicenseKey()},
     isActive: { type: Boolean, default: true }, // Active subscription flag
+    startDate:{type:Date,required:true},
+    endDate:{type:Date,required:true},
     nextBillingDate: { type: Date, required: true }, // Store next billing date for monthly subscriptions
   },
   { timestamps: true }
